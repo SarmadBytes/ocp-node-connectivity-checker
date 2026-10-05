@@ -1,0 +1,110 @@
+================================================================================
+EXAMPLE OUTPUT - OpenShift Node Communication Checker
+================================================================================
+
+This file shows an example of the script output when testing connectivity
+from all OpenShift nodes to payments-gateway.example.internal:8281
+
+================================================================================
+
+
+=================================================
+  OpenShift Node Communication Checker
+  Version 1.0
+=================================================
+
+ℹ Checking prerequisites...
+✓ OpenShift CLI (oc) found
+✓ Logged into OpenShift cluster
+✓ Connected to cluster: https://api.ocp-dmz.example.internal:6443
+
+Enter destination hostname or IP: payments-gateway.example.internal
+Enter destination port: 8281
+
+ℹ Validating inputs...
+✓ Destination: payments-gateway.example.internal
+✓ Port: 8281
+
+✓ Log directory created: logs/ocp-connectivity-check_2025-10-15_16-30-45
+
+ℹ Discovering OpenShift nodes...
+✓ Found 17 nodes (3 master, 3 infra, 11 worker)
+
+ℹ Testing connectivity from all nodes...
+
+[1/17] Testing etcd-0... Success ✓
+[2/17] Testing etcd-1... Success ✓
+[3/17] Testing etcd-2... Success ✓
+[4/17] Testing infra1... Success ✓
+[5/17] Testing infra2... Failed ✗ (Failed: Connection refused)
+[6/17] Testing infra3... Success ✓
+[7/17] Testing worker1... Success ✓
+[8/17] Testing worker2... Success ✓
+[9/17] Testing worker3... Failed ✗ (Failed: Connection timed out)
+[10/17] Testing worker4... Success ✓
+[11/17] Testing worker5... Success ✓
+[12/17] Testing worker6... Success ✓
+[13/17] Testing worker7... Success ✓
+[14/17] Testing worker8... Success ✓
+[15/17] Testing worker9... Success ✓
+[16/17] Testing worker10... Success ✓
+[17/17] Testing worker11... Success ✓
+
+
+=================================================
+  CONNECTIVITY TEST RESULTS
+=================================================
+
++----------------------+---------------+--------------------------------+------+----------+
+| Node Hostname        | Node IP       | Destination                    | Port | Result   |
++----------------------+---------------+--------------------------------+------+----------+
+| etcd-0               | 10.0.1.101  | payments-gateway...      | 8281 | Success  |
+| etcd-1               | 10.0.1.102  | payments-gateway...      | 8281 | Success  |
+| etcd-2               | 10.0.1.103  | payments-gateway...      | 8281 | Success  |
+| infra1               | 10.0.1.105  | payments-gateway...      | 8281 | Success  |
+| infra2               | 10.0.1.106  | payments-gateway...      | 8281 | Failed   |
+| infra3               | 10.0.1.107  | payments-gateway...      | 8281 | Success  |
+| worker1              | 10.0.1.108  | payments-gateway...      | 8281 | Success  |
+| worker2              | 10.0.1.109  | payments-gateway...      | 8281 | Success  |
+| worker3              | 10.0.1.110  | payments-gateway...      | 8281 | Failed   |
+| worker4              | 10.0.1.111  | payments-gateway...      | 8281 | Success  |
+| worker5              | 10.0.1.112  | payments-gateway...      | 8281 | Success  |
+| worker6              | 10.0.1.113  | payments-gateway...      | 8281 | Success  |
+| worker7              | 10.0.1.140  | payments-gateway...      | 8281 | Success  |
+| worker8              | 10.0.1.141  | payments-gateway...      | 8281 | Success  |
+| worker9              | 10.0.1.142  | payments-gateway...      | 8281 | Success  |
+| worker10             | 10.0.1.143  | payments-gateway...      | 8281 | Success  |
+| worker11             | 10.0.1.144  | payments-gateway...      | 8281 | Success  |
++----------------------+---------------+--------------------------------+------+----------+
+
+=========================================
+  SUMMARY STATISTICS
+=========================================
+Total Nodes:      17
+Successful:       15
+Failed:           2
+Success Rate:     88%
+=========================================
+
+✓ Detailed logs saved to: logs/ocp-connectivity-check_2025-10-15_16-30-45/connectivity-check.log
+
+
+================================================================================
+NOTES:
+================================================================================
+
+1. In this example, 15 out of 17 nodes successfully connected to the destination.
+
+2. Two nodes failed:
+   - infra2 (10.0.1.106): Connection refused
+   - worker3 (10.0.1.110): Connection timed out
+
+3. Detailed curl output for each node is saved in the log file.
+
+4. The script uses color coding in the terminal:
+   - Green ✓ = Success
+   - Red ✗ = Failed
+
+5. Exit code will be 1 because there were failures (useful for automation).
+
+================================================================================
